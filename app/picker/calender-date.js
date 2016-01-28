@@ -53,8 +53,8 @@ var CalenderCtrl = function($scope,$timeout,picker){
 	self.dateCells = [];
 	self.monthList = picker.monthNames;
 	self.moveCalenderAnimation='';
-	self.format = angular.isUndefined(self.format) ? 'MM-DD-YYYY': self.format;
-	self.initialDate =	angular.isUndefined(self.initialDate)? moment() : moment(self.initialDate,self.format);
+	self.format = angular.isUndefined(self.format) ? 'iYYYY/iM/iD': self.format;
+	self.initialDate =	angular.isUndefined(self.initialDate)? moment(): moment(self.initialDate,self.format);
 	self.currentDate = self.initialDate.clone();
 	if(self.restrictToMinDate) 
 		self.minDate = moment(self.minDate, self.format);
@@ -63,7 +63,7 @@ var CalenderCtrl = function($scope,$timeout,picker){
     self.yearItems = {
         currentIndex_: 0,
         PAGE_SIZE: 7,
-        START: 1900,
+        START: 1300,
         getItemAtIndex: function(index) {
             if(this.currentIndex_ < index)
                 this.currentIndex_ = index;
@@ -121,8 +121,8 @@ CalenderCtrl.prototype.setView = function(){
 
 CalenderCtrl.prototype.showYear = function() { 
 	var self = this;
-    self.yearTopIndex = (self.initialDate.year() - self.yearItems.START) + Math.floor(self.yearItems.PAGE_SIZE / 2);
-    self.yearItems.currentIndex_ = (self.initialDate.year() - self.yearItems.START) + 1;
+    self.yearTopIndex = (self.initialDate.iYear() - self.yearItems.START) + Math.floor(self.yearItems.PAGE_SIZE / 2);
+    self.yearItems.currentIndex_ = (self.initialDate.iYear() - self.yearItems.START) + 1;
 };
 
 
@@ -133,8 +133,8 @@ CalenderCtrl.prototype.buildMonthCells = function(){
 
 CalenderCtrl.prototype.buildDateCells = function(){
 	var self = this;
-	var currentMonth = self.initialDate.month();
-    var calStartDate  = self.initialDate.clone().date(0).day(self.startDay);
+	var currentMonth = self.initialDate.iMonth();
+    var calStartDate  = self.initialDate.clone().iDate(0).day(self.startDay);
     var weekend = false;
     var isDisabledDate =false;
 
@@ -151,7 +151,7 @@ CalenderCtrl.prototype.buildDateCells = function(){
 		var week = [];
 		for (var j = 0; j < 7; j++) {
 			
-			var isCurrentMonth = (calStartDate.month()=== currentMonth);	
+			var isCurrentMonth = (calStartDate.iMonth()=== currentMonth);	
 			
 
 			if(isCurrentMonth){isDisabledDate=false}else{isDisabledDate=true};
@@ -162,13 +162,11 @@ CalenderCtrl.prototype.buildDateCells = function(){
 			
 			if(self.restrictToMaxDate && !angular.isUndefined(self.maxDate) && !isDisabledDate)
 				isDisabledDate = self.maxDate.isBefore(calStartDate);
-			
-
 			var  day = {
 	            	date : calStartDate.clone(),
-	                dayNum: isCurrentMonth ? calStartDate.date() :"",
+	                dayNum: isCurrentMonth ? calStartDate.format('iD') :"",
 	                month : calStartDate.month(),
-	                today: calStartDate.isSame(moment(),'day') && calStartDate.isSame(moment(),'month'),
+	                today: calStartDate.isSame(moment(),'day') && calStartDate.isSame(moment(),'iMonth'),
 	                year : calStartDate.year(),
 	                dayName : calStartDate.format('dddd'),
 	                isWeekEnd : weekend,
@@ -200,11 +198,11 @@ CalenderCtrl.prototype.changePeriod = function(c){
 	if(c === 'p'){
 		if(self.stopScrollPrevious) return;
 		self.moveCalenderAnimation='slideLeft';
-		self.initialDate.subtract(1,'M');
+		self.initialDate.subtract(1,'iMonth');
 	}else{
 		if(self.stopScrollNext) return;
 		self.moveCalenderAnimation='slideRight';
-		self.initialDate.add(1,'M');
+		self.initialDate.add(1,'iMonth');
 	}
 
 	self.buildDateCells();
@@ -256,7 +254,7 @@ CalenderCtrl.prototype.changeView = function(view){
 
 CalenderCtrl.prototype.changeYear = function(yr){
 	var self = this;
-	self.initialDate.year(yr);
+	self.initialDate.iYear(yr);
 	self.buildDateCells();
 	self.view='DATE';	
 }
@@ -344,7 +342,6 @@ function DateTimePicker($mdUtil,$mdMedia,$document,$timeout,picker){
                 +'  </md-input-container>',
       link :  function(scope,$element,attr){
 
-        console.log(picker.massagePath)
 
         var inputPane = $element[0].querySelector('.sm-input-container');
         var calenderPane = $element[0].querySelector('.sm-calender-pane');
@@ -555,18 +552,18 @@ function picker(){
 
     //date picker configuration
     var daysNames =  [
-        {'single':'S','shortName':'Su','fullName':'Sunday'}, 
-        {'single':'M','shortName':'Mo','fullName':'MonDay'}, 
-        {'single':'T','shortName':'Tu','fullName':'TuesDay'}, 
-        {'single':'W','shortName':'We','fullName':'Wednesday'}, 
-        {'single':'T','shortName':'Th','fullName':'Thursday'}, 
-        {'single':'F','shortName':'Fr','fullName':'Friday'}, 
-        {'single':'S','shortName':'Sa','fullName':'Saturday'}
+        {'single':'A','shortName':'Ah','fullName':'al-aḥad'}, 
+        {'single':'I','shortName':'It','fullName':'al-ithnayn'}, 
+        {'single':'T','shortName':'Th','fullName':'ath-thalathā'}, 
+        {'single':'A','shortName':'Ar','fullName':'al-’arbi‘ā’'}, 
+        {'single':'K','shortName':'Kh','fullName':'al-khamīs'}, 
+        {'single':'J','shortName':'Ju','fullName':'al-jum‘ah'}, 
+        {'single':'S','shortName':'Sa','fullName':'as-sabt'}
     ];
 
     var dayHeader = "single";
 
-    var monthNames = moment.months();
+    var monthNames = ['Muharram','Safar','Rabia Awal','Rabia Thani','Jumaada Awal','Jumaada Thani','Rajab','Sha\'ban','Ramdan','Shawwal','Dhul-Qi\'dah','Dhul-Hijjah'];
 
     //range picker configuration
     var rangeDivider = "To";

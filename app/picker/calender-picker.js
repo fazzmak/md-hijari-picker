@@ -20,7 +20,6 @@ function DatePickerDir($timeout,picker){
 	    templateUrl:"picker/date-picker.html",
 		link : function(scope,element,att,ngModelCtrl){
 			setViewMode(scope.mode)
-			console.log(picker.okLabel);
 			scope.okLabel = picker.okLabel;
 			scope.cancelLabel = picker.cancelLabel;			
 
@@ -63,7 +62,7 @@ function DatePickerDir($timeout,picker){
 			})
 
 			scope.selectedDateTime = function(){
-				var date = moment(scope.selectedDate,scope.format);
+				var date = scope.selectedDate;
 				if(!date.isValid()){
 					date = moment();
 					scope.selectedDate =date;

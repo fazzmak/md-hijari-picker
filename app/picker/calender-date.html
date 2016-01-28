@@ -22,7 +22,7 @@
 								<md-icon md-font-icon="material-icons">keyboard_arrow_left</md-icon>					
 						</md-button>
 						<md-button class="md-button" ng-class="vm.moveCalenderAnimation" ng-click="vm.changeView('YEAR_MONTH');vm.showYear()">
-							{{vm.monthList[vm.initialDate.month()]}}{{' '}}{{vm.initialDate.year()}}
+							{{vm.monthList[vm.initialDate.iMonth()]}}{{' '}}{{vm.initialDate.iYear()}}
 						</md-button>			
 						<md-button  
 							ng-disabled="vm.stopScrollNext" 

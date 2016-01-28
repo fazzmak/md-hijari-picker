@@ -10,7 +10,9 @@ angular
 
 /*    pickerProvider.setMassagePath("test ddd");*/
 
-    pickerProvider.setDayHeader('single');
+    pickerProvider.setDayHeader('shortName');
+    pickerProvider.setOkLabel('حسنا');
+    pickerProvider.setCancelLabel('إلغاء');    
     
     $urlRouterProvider.otherwise('/home');
 
