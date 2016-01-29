@@ -43,8 +43,8 @@ function DatePickerDir($timeout,picker){
 
 			scope.$on('calender:date-selected',function(){
 				if(scope.closeOnSelect && (scope.mode!=='date-time' || scope.mode!=='time')){
-					var date = moment(scope.selectedDate,scope.format);
-					if(!date.isValid()){
+					var date = scope.selectedDate;
+					if(angular.isUndefined(date) || !date.isValid()){
 						date = moment();
 						scope.selectedDate =date;
 					}
@@ -63,7 +63,8 @@ function DatePickerDir($timeout,picker){
 
 			scope.selectedDateTime = function(){
 				var date = scope.selectedDate;
-				if(!date.isValid()){
+
+				if(angular.isUndefined(date) || !date.isValid()){
 					date = moment();
 					scope.selectedDate =date;
 				}

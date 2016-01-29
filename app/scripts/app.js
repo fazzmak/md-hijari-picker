@@ -9,7 +9,7 @@ angular
   .config(function ($stateProvider, $urlRouterProvider,$mdThemingProvider,pickerProvider) {
 
 /*    pickerProvider.setMassagePath("test ddd");*/
-
+    moment.locale('ar');
     pickerProvider.setDayHeader('shortName');
     pickerProvider.setOkLabel('حسنا');
     pickerProvider.setCancelLabel('إلغاء');    

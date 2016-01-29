@@ -33,7 +33,6 @@ function Calender($timeout,picker){
 
 var CalenderCtrl = function($scope,$timeout,picker){
 	var self  = this;
-
 	self.$scope = $scope;
 	self.$timeout = $timeout;
     self.picker = picker;
@@ -166,7 +165,7 @@ CalenderCtrl.prototype.buildDateCells = function(){
 	            	date : calStartDate.clone(),
 	                dayNum: isCurrentMonth ? calStartDate.format('iD') :"",
 	                month : calStartDate.month(),
-	                today: calStartDate.isSame(moment(),'day') && calStartDate.isSame(moment(),'iMonth'),
+	                today: calStartDate.isSame(moment(),'iDay') && calStartDate.isSame(moment(),'iMonth'),
 	                year : calStartDate.year(),
 	                dayName : calStartDate.format('dddd'),
 	                isWeekEnd : weekend,
@@ -562,8 +561,8 @@ function picker(){
     ];
 
     var dayHeader = "single";
-
-    var monthNames = ['Muharram','Safar','Rabia Awal','Rabia Thani','Jumaada Awal','Jumaada Thani','Rajab','Sha\'ban','Ramdan','Shawwal','Dhul-Qi\'dah','Dhul-Hijjah'];
+    //['Muharram','Safar','Rabia Awal','Rabia Thani','Jumaada Awal','Jumaada Thani','Rajab','Sha\'ban','Ramdan','Shawwal','Dhul-Qi\'dah','Dhul-Hijjah']
+    var monthNames = moment.months();
 
     //range picker configuration
     var rangeDivider = "To";
